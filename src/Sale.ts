@@ -1,5 +1,8 @@
 export default class Sale {
-    machine : string;
-    date : Date;
-    item : number
+    constructor(
+        readonly machine : string,
+        readonly line : string,
+        readonly date : string,
+        readonly item : string
+    ) { }
 }
