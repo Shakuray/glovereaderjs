@@ -1,17 +1,17 @@
 [
     {
-        "machine" : "30039",
+        "id" : "30039",
         "items" : [
-            {"line" : 1, "item" : "GAFAS CLIMAX 595-I" },
-            {"line" : 2, "item" : "GUANTE ECOCUT T.6" },
-            {"line" : 3, "item" : "GUANTE URVIPROT T.8" },
-            {"line" : 4, "item" : "GUANTE URVIPROT T.9" },
-            {"line" : 5, "item" : "GUANTE URVIPROT T.10" },
-            {"line" : 6, "item" : "MANGUITO URVISLEEVE" },
-            {"line" : 7, "item" : "GUANTE 212 MC" },
-            {"line" : 8, "item" : "NITRIBON T.9" },
-            {"line" : 9, "item" : "GUANTE KISSAN T.8" },
-            {"line" : 10, "item" : "GUANTE KISSAN T.9" }
+            {"line" : "1", "name" : "GAFAS CLIMAX 595-I" },
+            {"line" : "2", "name" : "GUANTE ECOCUT T.6" },
+            {"line" : "3", "name" : "GUANTE URVIPROT T.8" },
+            {"line" : "4", "name" : "GUANTE URVIPROT T.9" },
+            {"line" : "5", "name" : "GUANTE URVIPROT T.10" },
+            {"line" : "6", "name" : "MANGUITO URVISLEEVE" },
+            {"line" : "7", "name" : "GUANTE 212 MC" },
+            {"line" : "8", "name" : "NITRIBON T.9" },
+            {"line" : "9", "name" : "GUANTE KISSAN T.8" },
+            {"line" : "10", "name" : "GUANTE KISSAN T.9" }
         ]
     }
 ]

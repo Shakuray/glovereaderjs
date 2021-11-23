@@ -1,53 +1,53 @@
 [
     {
-        "machine" : "00004296",
+        "id" : "00004296",
         "items" : [
-            { "line" : 1, "item" : "G. URVIPROT T7" },
-            { "line" : 2, "item" : "G. URVIPROT T8" },
-            { "line" : 3, "item" : "G. URVIPROT T8" },
-            { "line" : 4, "item" : "G. URVIPROT T9" },
-            { "line" : 5, "item" : "G. URVIPROT T9" },
-            { "line" : 6, "item" : "G. URVIPROT T10" },
-            { "line" : 7, "item" : "G. URVIPROT T10" },
-            { "line" : 8, "item" : "URV ECONIT T8" },
-            { "line" : 9, "item" : "URV ECONIT T9" },
-            { "line" : 10, "item" : "GAFAS CLIMAX" },
-            { "line" : 11, "item" : "MASCARETA" },
-            { "line" : 12, "item" : "MANGUITO URVISLEEVE" }
+            { "line" : "1", "name" : "G. URVIPROT T7" },
+            { "line" : "2", "name" : "G. URVIPROT T8" },
+            { "line" : "3", "name" : "G. URVIPROT T8" },
+            { "line" : "4", "name" : "G. URVIPROT T9" },
+            { "line" : "5", "name" : "G. URVIPROT T9" },
+            { "line" : "6", "name" : "G. URVIPROT T10" },
+            { "line" : "7", "name" : "G. URVIPROT T10" },
+            { "line" : "8", "name" : "URV ECONIT T8" },
+            { "line" : "9", "name" : "URV ECONIT T9" },
+            { "line" : "10", "name" : "GAFAS CLIMAX" },
+            { "line" : "11", "name" : "MASCARETA" },
+            { "line" : "12", "name" : "MANGUITO URVISLEEVE" }
         ]
     },
     {
-        "machine" : "00004300",
+        "id" : "00004300",
         "items" : [
-            { "line" : 1, "item" : "G. URVIPROT T7" },
-            { "line" : 2, "item" : "G. URVIPROT T8" },
-            { "line" : 3, "item" : "G. URVIPROT T8" },
-            { "line" : 4, "item" : "G. URVIPROT T9" },
-            { "line" : 5, "item" : "G. URVIPROT T9" },
-            { "line" : 6, "item" : "G. URVIPROT T10" },
-            { "line" : 7, "item" : "G. URVIPROT T11" },
-            { "line" : 8, "item" : "MANGUITO TAEKI" },
-            { "line" : 9, "item" : "MANGUITO URVISLEEVE" },
-            { "line" : 10, "item" : "MANGUITO URVISLEEVE" },
-            { "line" : 11, "item" : "GAFAS CLIMAX" },
-            { "line" : 12, "item" : "MASCARETA" }
+            { "line" : "1", "name" : "G. URVIPROT T7" },
+            { "line" : "2", "name" : "G. URVIPROT T8" },
+            { "line" : "3", "name" : "G. URVIPROT T8" },
+            { "line" : "4", "name" : "G. URVIPROT T9" },
+            { "line" : "5", "name" : "G. URVIPROT T9" },
+            { "line" : "6", "name" : "G. URVIPROT T10" },
+            { "line" : "7", "name" : "G. URVIPROT T11" },
+            { "line" : "8", "name" : "MANGUITO TAEKI" },
+            { "line" : "9", "name" : "MANGUITO URVISLEEVE" },
+            { "line" : "10", "name" : "MANGUITO URVISLEEVE" },
+            { "line" : "11", "name" : "GAFAS CLIMAX" },
+            { "line" : "12", "name" : "MASCARETA" }
         ]
     },
     {
-        "machine" : "00004304",
+        "id" : "00004304",
         "items" : [
-            { "line" : 1, "item" : "G. URVIPROT T7" },
-            { "line" : 2, "item" : "G. URVIPROT T8" },
-            { "line" : 3, "item" : "G. URVIPROT T9" },
-            { "line" : 4, "item" : "G. URVIPROT T10" },
-            { "line" : 5, "item" : "URV ECONIT T7" },
-            { "line" : 6, "item" : "URV ECONIT T8" },
-            { "line" : 7, "item" : "URV ECONIT T8" },
-            { "line" : 8, "item" : "URV ECONIT T9" },
-            { "line" : 9, "item" : "MANGUITO TAEKI" },
-            { "line" : 10, "item" : "MANGUITO URVISLEEVE" },
-            { "line" : 11, "item" : "GAFAS CLIMAX" },
-            { "line" : 12, "item" : "MASCARETA" }
+            { "line" : "1", "name" : "G. URVIPROT T7" },
+            { "line" : "2", "name" : "G. URVIPROT T8" },
+            { "line" : "3", "name" : "G. URVIPROT T9" },
+            { "line" : "4", "name" : "G. URVIPROT T10" },
+            { "line" : "5", "name" : "URV ECONIT T7" },
+            { "line" : "6", "name" : "URV ECONIT T8" },
+            { "line" : "7", "name" : "URV ECONIT T8" },
+            { "line" : "8", "name" : "URV ECONIT T9" },
+            { "line" : "9", "name" : "MANGUITO TAEKI" },
+            { "line" : "10", "name" : "MANGUITO URVISLEEVE" },
+            { "line" : "11", "name" : "GAFAS CLIMAX" },
+            { "line" : "12", "name" : "MASCARETA" }
         ]
     }
 ]

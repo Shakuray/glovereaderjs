@@ -1,19 +1,19 @@
 [
     {
-        "machine" : "222222",
+        "id" : "00222222",
         "items" : [
-            {"line" :1 ,"item" : "GUANTE URVIPROT T8/7" },
-            {"line" :2 ,"item" : "GUANTE URVIPROT T9/10" },
-            {"line" :3 ,"item" : "MASCARETA" },
-            {"line" :4 ,"item" : "ECOPU T6/7" },
-            {"line" :5 ,"item" : "ECOPU T9/10" },
-            {"line" :6 ,"item" : "ECOPU T8" },
-            {"line" :7 ,"item" : "TUFF JUBA 416 T7/8/9" },
-            {"line" :8 ,"item" : "DIADEMA 3M" },
-            {"line" :9 ,"item" : "TUFF JUBA 406 T7" },
-            {"line" :10 ,"item" : "TUFF JUBA 406 T8/9" },
-            {"line" :11 ,"item" : "ULLERES PEGASO" },
-            {"line" :12 ,"item" : "RECANVI AUDITIU" }
+            {"line" : "1" , "name" : "GUANTE URVIPROT T8/7" },
+            {"line" : "2" , "name" : "GUANTE URVIPROT T9/10" },
+            {"line" : "3" , "name" : "MASCARETA" },
+            {"line" : "4" , "name" : "ECOPU T6/7" },
+            {"line" : "5" , "name" : "ECOPU T9/10" },
+            {"line" : "6" , "name" : "ECOPU T8" },
+            {"line" : "7" , "name" : "TUFF JUBA 416 T7/8/9" },
+            {"line" : "8" , "name" : "DIADEMA 3M" },
+            {"line" : "9" , "name" : "TUFF JUBA 406 T7" },
+            {"line" : "10" , "name" : "TUFF JUBA 406 T8/9" },
+            {"line" : "11" , "name" : "ULLERES PEGASO" },
+            {"line" : "12" , "name" : "RECANVI AUDITIU" }
         ]
     }
 ]

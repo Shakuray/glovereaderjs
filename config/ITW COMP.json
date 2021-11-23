@@ -1,17 +1,17 @@
 [
     {
-        "machine" : "11223344",
+        "id" : "11223344",
         "items" : [
-            {"line" : 1, "item" : "ECOCUT T6" },
-            {"line" : 2, "item" : "ECOCUT T7" },
-            {"line" : 3, "item" : "ECOCUT T8" },
-            {"line" : 4, "item" : "ECOCUT T9" },
-            {"line" : 5, "item" : "ULLERES CLIMAX" },
-            {"line" : 6, "item" : "TAP EAR ULTRAFIT" },
-            {"line" : 7, "item" : "URVIPROT T9" },
-            {"line" : 8, "item" : "TUFF JUBA 406 T9" },
-            {"line" : 9, "item" : "CUTTER MARTOR SECUNORM" },
-            {"line" : 10, "item" : "ARMILLA REFLECTANT" }
+            {"line" : "1", "name" : "ECOCUT T6" },
+            {"line" : "2", "name" : "ECOCUT T7" },
+            {"line" : "3", "name" : "ECOCUT T8" },
+            {"line" : "4", "name" : "ECOCUT T9" },
+            {"line" : "5", "name" : "ULLERES CLIMAX" },
+            {"line" : "6", "name" : "TAP EAR ULTRAFIT" },
+            {"line" : "7", "name" : "URVIPROT T9" },
+            {"line" : "8", "name" : "TUFF JUBA 406 T9" },
+            {"line" : "9", "name" : "CUTTER MARTOR SECUNORM" },
+            {"line" : "10", "name" : "ARMILLA REFLECTANT" }
         ] 
     }
 ]
