@@ -1,0 +1,12 @@
+[
+    {"machine" : "333333", "line" : 1, "item" : "ECOPU 7"},
+    {"machine" : "333333", "line" : 2, "item" : "ECOPU 8"},
+    {"machine" : "333333", "line" : 3, "item" : "ECOPU 9"},
+    {"machine" : "333333", "line" : 4, "item" : "ECOPU 10"},
+    {"machine" : "333333", "line" : 5, "item" : "JUBA 416 +7"},
+    {"machine" : "333333", "line" : 6, "item" : "JUBA 416 +8"},
+    {"machine" : "333333", "line" : 7, "item" : "PROTECTOR DIADEMA"},
+    {"machine" : "333333", "line" : 8, "item" : "TUFF JUBA 416 +9"},
+    {"machine" : "333333", "line" : 9, "item" : "GAFAS"},
+    {"machine" : "333333", "line" : 10, "item" : "MASCARILLA"}
+]
