@@ -4,6 +4,7 @@ import ESPARRAGUERA from '../config/ESPARRAGUERA.json'
 import ITW_COMP from '../config/ITW COMP.json'
 import GARRIGA from '../config/LA GARRIGA.json'
 import ZARAGOZA from '../config/ZARAGOZA.json'
+import ListNotFound from './ListNotFound'
 
 export default function FindSaleName(listType : string, machineId : string, line : string) : string {
     
@@ -20,5 +21,5 @@ function getList(type : string) {
     if (type.toUpperCase().includes("ALEMANYA")) return ALEMANYA
     if (type.toUpperCase().includes("COMPONEN")) return ITW_COMP
     if (type.toUpperCase().includes("GARRIGA")) return GARRIGA
-    else throw new Error(`Cannot find list for '${type}'`);
+    else throw new ListNotFound(type);
 }
