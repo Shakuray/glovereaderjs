@@ -20,4 +20,5 @@ function getList(type : string) {
     if (type.toUpperCase().includes("ALEMANYA")) return ALEMANYA
     if (type.toUpperCase().includes("COMPONEN")) return ITW_COMP
     if (type.toUpperCase().includes("GARRIGA")) return GARRIGA
+    else throw new Error(`Cannot find list for '${type}'`);
 }
