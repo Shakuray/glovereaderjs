@@ -2,15 +2,16 @@
   "name": "glovereaderjs",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
-    "dev": "nodemon",
-    "start": "ts-node src/index.ts"
+    "start": "electron dist/app.js",
+    "build": "tsc"
   },
   "author": "Joan Mas",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^16.11.9",
+    "electron": "^16.0.1",
     "nodemon": "^2.0.15",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.2"
