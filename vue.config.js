@@ -11,7 +11,7 @@ module.exports = {
     config
       .plugin('html')
       .tap(args => {
-        args[0].title= 'Vue'
+        args[0].title= 'GloveReader'
         return args
       })
   },
@@ -28,7 +28,6 @@ module.exports = {
       nodeIntegration: true,
       builderOptions: {
         win : {
-          title : "GloveReaderJS",
           icon : "public/favicon.ico"
         }
       }
