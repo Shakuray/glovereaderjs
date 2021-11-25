@@ -5,7 +5,7 @@ import Sale from './Sale';
 import FindSale from '../Infrastructure/SaleFinder';
 import File from '@/Domain/File'
 
-export default async function ProcessFile(fileToRead : File) : Promise<void> {
+export default async function ProcessFile(fileToRead : File) : Promise<string> {
 
     const workbook = new ExcelJS.Workbook(); 
     await workbook.xlsx.readFile(fileToRead.toString())
@@ -69,5 +69,6 @@ export default async function ProcessFile(fileToRead : File) : Promise<void> {
     }]
 
     console.log(`Write file ./output/${listType}.xlsx`)
-    return await workbook.xlsx.writeFile(`./output/${listType}.xlsx`)
+    await workbook.xlsx.writeFile(`./output/${listType}.xlsx`)
+    return listType;
 }

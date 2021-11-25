@@ -1,7 +1,27 @@
 export default class File {
-    constructor(private file : string) { }
+    public name : string;
+    public error : string;
+
+    constructor(
+        private file : string
+    ) {
+        this.name = "";
+        this.error = "";
+    }
 
     public toString() : string {
-        return this.file;
+        return (this.name != "" ? this.name : this.file);
+    }
+
+    public isProcessed() : boolean {
+        return this.name != "";
+    }
+
+    public process(name : string) {
+        this.name = name;
+    }
+
+    public setError(msg : string) {
+        this.error = msg;
     }
 }
