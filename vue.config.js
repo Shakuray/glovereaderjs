@@ -28,6 +28,7 @@ module.exports = {
       nodeIntegration: true,
       builderOptions: {
         win : {
+          title : "GloveReaderJS",
           icon : "public/favicon.ico"
         }
       }

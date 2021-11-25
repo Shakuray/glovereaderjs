@@ -6,7 +6,7 @@
             <FileComponent v-for="(file, i) in files" :key="i" :file="file" />
         </div>
 
-        <v-btn class="mt-4" v-if="files.length > 0" :loading="loading" color="primary" @click="processFiles()"> Start </v-btn>
+        <v-btn class="mt-4" :disabled="files.length == 0" :loading="loading" color="primary" @click="processFiles()"> <v-icon>mdi-play</v-icon> Start </v-btn>
     </div>
 </template>
 

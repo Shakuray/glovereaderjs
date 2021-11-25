@@ -14,8 +14,10 @@ async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
     icon: 'public/favicon.ico',
-    width: 1000,
+    title : "GloveReaderJS",
+    width: 500,
     height: 800,
+    resizable: false,
     webPreferences: {
       
       // Use pluginOptions.nodeIntegration, leave this alone
