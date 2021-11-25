@@ -1,10 +1,10 @@
-import ITW_FAST from '../config/ITW FAST.json'
-import ALEMANYA from '../config/ALEMANYA.json'
-import ESPARRAGUERA from '../config/ESPARRAGUERA.json'
-import ITW_COMP from '../config/ITW COMP.json'
-import GARRIGA from '../config/LA GARRIGA.json'
-import ZARAGOZA from '../config/ZARAGOZA.json'
-import ListNotFound from './ListNotFound'
+import ITW_FAST from '@/config/ITW FAST.json'
+import ALEMANYA from '@/config/ALEMANYA.json'
+import ESPARRAGUERA from '@/config/ESPARRAGUERA.json'
+import ITW_COMP from '@/config/ITW COMP.json'
+import GARRIGA from '@/config/LA GARRIGA.json'
+import ZARAGOZA from '@/config/ZARAGOZA.json'
+import ListNotFound from '@/Domain/ListNotFound'
 
 export default function FindSaleName(listType : string, machineId : string, line : string) : string {
     
@@ -14,7 +14,7 @@ export default function FindSaleName(listType : string, machineId : string, line
     return name;
 }
 
-function getList(type : string) {
+function getList(type : string) : any {
     if (type.toUpperCase().includes("FASTENER")) return ITW_FAST
     if (type.toUpperCase().includes("ESPARRAGUERA")) return ESPARRAGUERA
     if (type.toUpperCase().includes("ZARAGOZA")) return ZARAGOZA

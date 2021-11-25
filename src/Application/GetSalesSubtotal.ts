@@ -1,5 +1,5 @@
-import Sale from "./Sale";
-import Subtotal from "./Subtotal";
+import Sale from "../Domain/Sale";
+import Subtotal from "../Domain/Subtotal";
 
 export default function GetSalesSubtotal(sales : Sale[]) {
     const subtotals = [] as Subtotal[];

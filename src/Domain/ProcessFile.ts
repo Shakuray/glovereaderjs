@@ -1,8 +1,8 @@
 import ExcelJS from 'exceljs';
-import GetSalesSubtotal from './GetSalesSubtotal';
+import GetSalesSubtotal from '../Application/GetSalesSubtotal';
 import ListNotFound from './ListNotFound';
 import Sale from './Sale';
-import FindSale from './SaleFinder';
+import FindSale from '../Infrastructure/SaleFinder';
 
 export default async function ProcessFile(fileToRead : string) : Promise<void> {
 
