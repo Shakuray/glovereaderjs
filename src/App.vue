@@ -2,22 +2,18 @@
     <v-app>
         <v-main class="height:calc(100vh)">           
             <v-container fluid>
-                <router-view></router-view>
+                <AppContainer />
             </v-container>
         </v-main>
-
-        <!-- <v-footer app>
-            
-        </v-footer> -->
-
     </v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import AppContainer from './AppContainer.vue';
 
 @Component({
-    components: { }
+    components: { AppContainer }
 })
 
 export default class App extends Vue {

@@ -1,13 +1,14 @@
-import ExcelJS from 'exceljs';
+import ExcelJS from "exceljs/dist/es5/exceljs.browser";
 import GetSalesSubtotal from '../Application/GetSalesSubtotal';
 import ListNotFound from './ListNotFound';
 import Sale from './Sale';
 import FindSale from '../Infrastructure/SaleFinder';
+import File from '@/Domain/File'
 
-export default async function ProcessFile(fileToRead : string) : Promise<void> {
+export default async function ProcessFile(fileToRead : File) : Promise<void> {
 
     const workbook = new ExcelJS.Workbook(); 
-    await workbook.xlsx.readFile(fileToRead)
+    await workbook.xlsx.readFile(fileToRead.toString())
         
     const sales = [] as Sale[];
 

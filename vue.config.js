@@ -24,6 +24,8 @@ module.exports = {
       enableInSFC: false
     },
     electronBuilder: {
+      enableRemoteModule: true,
+      nodeIntegration: true,
       builderOptions: {
         win : {
           icon : "public/favicon.ico"
