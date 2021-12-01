@@ -15,11 +15,12 @@ export default function FindSaleName(listType : string, machineId : string, line
 }
 
 function getList(type : string) : any {
-    if (type.toUpperCase().includes("FASTENER")) return ITW_FAST
-    if (type.toUpperCase().includes("ESPARRAGUERA")) return ESPARRAGUERA
-    if (type.toUpperCase().includes("ZARAGOZA")) return ZARAGOZA
-    if (type.toUpperCase().includes("ALEMANYA")) return ALEMANYA
-    if (type.toUpperCase().includes("COMPONEN")) return ITW_COMP
-    if (type.toUpperCase().includes("GARRIGA")) return GARRIGA
+    const text = type.toUpperCase();
+    if (text.includes("FAST")) return ITW_FAST
+    if (text.includes("ESPAR")) return ESPARRAGUERA
+    if (text.includes("ZARAG")) return ZARAGOZA
+    if (text.includes("ALEMA")) return ALEMANYA
+    if (text.includes("COMPON")) return ITW_COMP
+    if (text.includes("GARRIGA") || text.includes("LG")) return GARRIGA
     else throw new ListNotFound(type);
 }
