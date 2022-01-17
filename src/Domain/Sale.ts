@@ -3,6 +3,7 @@ export default class Sale {
         readonly machine : string,
         readonly line : string,
         readonly date : string,
+        readonly matricula : string,
         readonly item : string
     ) { }
 }

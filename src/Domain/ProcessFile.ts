@@ -14,6 +14,7 @@ export default async function ProcessFile(fileToRead : File) : Promise<string> {
 
     const worksheet = workbook.getWorksheet("TManager");
     let listType : string = "";
+    let lastMatricula = "";
 
     worksheet.eachRow({ includeEmpty: true }, function(row, rowNumber) {
         if (rowNumber == 2){
@@ -25,13 +26,20 @@ export default async function ProcessFile(fileToRead : File) : Promise<string> {
             description : row.getCell(5).toString(),
             date : row.getCell(6).toString(),
             isSale : row.getCell(8).toString() == "Venta Price Holding",
+            matricula : row.getCell(9).toString(),
             line : row.getCell(12).toString()
+        }
+
+        if (excelRow.matricula) {
+            lastMatricula = excelRow.matricula;
+        }else{
+            excelRow.matricula = lastMatricula;
         }
 
         if (excelRow.isSale) {
             try {
                 sales.push(
-                    new Sale(excelRow.machine, excelRow.line, excelRow.date, 
+                    new Sale(excelRow.machine, excelRow.line, excelRow.date, excelRow.matricula,
                         FindSale(listType, excelRow.machine, excelRow.line)
                     )
                 )
@@ -43,12 +51,16 @@ export default async function ProcessFile(fileToRead : File) : Promise<string> {
         }
     });
 
-    const filter = workbook.addWorksheet("Filtre");
+    let filter = workbook.getWorksheet("Filtre");
+    if (filter == undefined){
+        filter = workbook.addWorksheet("Filtre");
+    }
     
     filter.columns = [
         {header: 'MÁQUINA', key: 'machine', width: 15},
         {header: 'LÍNEA', key: 'line', width: 10},
         {header: 'FECHA', key: 'date', width: 20},
+        {header: 'MATRICULA', key: 'matricula', width: 20},
         {header: 'PRODUCTO', key: 'item', width: 25},
         {header: '', key: '', width: 30},
         {header: 'PRODUCTO', key: 'itemName', width: 25},
