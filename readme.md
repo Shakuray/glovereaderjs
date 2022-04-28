@@ -12,7 +12,7 @@ Use the `dist_electron\win-unpacked` version and execute it with `glovereaderjs.
 
 All config json files should be placed at `src/config` folder. Use one file for each config. f.i. `ALEMANYA.json`
 
-```
+```json
 [
     {
         "id" : "00333333",
