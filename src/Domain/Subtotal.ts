@@ -1,4 +1,4 @@
-export default interface Subtotal{
-    itemName : string, 
-    ammount : number
+export default interface Subtotal {
+    itemName: string;
+    ammount: number;
 }

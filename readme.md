@@ -1,7 +1,9 @@
 # 🤚 GloveReader JS
+
 Transforms and filter vending machine excel files
 
 ### Build 📦
+
 ```
 npm run electron:build
 ```
@@ -15,18 +17,18 @@ All config json files should be placed at `src/config` folder. Use one file for 
 ```json
 [
     {
-        "id" : "00333333",
-        "items" : [
-            {"line" : "1", "name" : "ECOPU 7"},
-            {"line" : "2", "name" : "ECOPU 8"},
-            {"line" : "3", "name" : "ECOPU 9"},
-            {"line" : "4", "name" : "ECOPU 10"},
-            {"line" : "5", "name" : "JUBA 416 +7"},
-            {"line" : "6", "name" : "JUBA 416 +8"},
-            {"line" : "7", "name" : "PROTECTOR DIADEMA"},
-            {"line" : "8", "name" : "TUFF JUBA 416 +9"},
-            {"line" : "9", "name" : "GAFAS"},
-            {"line" : "10", "name" : "MASCARILLA"}
+        "id": "00333333",
+        "items": [
+            { "line": "1", "name": "ECOPU 7" },
+            { "line": "2", "name": "ECOPU 8" },
+            { "line": "3", "name": "ECOPU 9" },
+            { "line": "4", "name": "ECOPU 10" },
+            { "line": "5", "name": "JUBA 416 +7" },
+            { "line": "6", "name": "JUBA 416 +8" },
+            { "line": "7", "name": "PROTECTOR DIADEMA" },
+            { "line": "8", "name": "TUFF JUBA 416 +9" },
+            { "line": "9", "name": "GAFAS" },
+            { "line": "10", "name": "MASCARILLA" }
         ]
     }
 ]

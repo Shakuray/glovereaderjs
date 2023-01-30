@@ -12,15 +12,13 @@
 </template>
 
 <script lang="ts">
-    
     import Vue from "vue";
-    import File from '@/Domain/File';
+    import File from "@/Domain/File";
 
     export default Vue.extend({
-        name: 'File',
-        props : {
-            file : File
-        }
+        name: "File",
+        props: {
+            file: File,
+        },
     });
-
 </script>

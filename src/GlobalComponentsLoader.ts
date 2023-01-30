@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue from "vue";
 
 export function registerGlobalComponents() {
     //Import global components here
