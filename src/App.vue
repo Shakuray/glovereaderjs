@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-main class="height:calc(100vh)">           
+        <v-main class="height:calc(100vh)">
             <v-container fluid>
                 <AppContainer />
             </v-container>
@@ -9,37 +9,43 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import AppContainer from './AppContainer.vue';
+    import { Component, Vue } from "vue-property-decorator";
+    import AppContainer from "./AppContainer.vue";
 
-@Component({
-    components: { AppContainer }
-})
-
-export default class App extends Vue {
-    data() {
-        return{
-
+    @Component({
+        components: { AppContainer },
+    })
+    export default class App extends Vue {
+        data() {
+            return {};
         }
     }
-}
-
 </script>
 
 <style lang="scss">
-  html, body {
-    overflow-y: hidden;
-  }
+    html,
+    body {
+        overflow-y: hidden;
+    }
 
-  .scrollbar-hidden::-webkit-scrollbar {
-  display: none;
-}
+    .scrollbar-hidden::-webkit-scrollbar {
+        display: none;
+    }
 
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-  }
+    #app {
+        font-family: Avenir, Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
+    }
+
+    .container {
+        padding: 0px !important;
+    }
+
+    html,
+    body {
+        overflow-y: hidden;
+    }
 </style>

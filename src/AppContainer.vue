@@ -1,48 +1,26 @@
 <template>
     <div>
-        <v-btn @click="getFiles()" color="secondary"> <v-icon>mdi-magnify</v-icon> Buscar </v-btn>
-        
-        <div style="height:calc(100vh - 120px); overflow-y:auto">
-            <FileComponent v-for="(file, i) in files" :key="i" :file="file" />
-        </div>
-
-        <v-btn class="mt-4" :disabled="files.length == 0" :loading="loading" color="primary" @click="processFiles()"> <v-icon>mdi-play</v-icon> Start </v-btn>
+        <v-tabs v-model="tab" bg-color="primary">
+            <v-tab :value="0"> <v-icon left>mdi-file</v-icon> Reader</v-tab>
+            <v-tab :value="1"> <v-icon left>mdi-cog</v-icon> Config</v-tab>
+        </v-tabs>
+        <v-window v-model="tab">
+            <v-window-item :value="0"><Reader /></v-window-item>
+            <v-window-item :value="1"> <ConfigPanel /> </v-window-item>
+        </v-window>
     </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import File from '@/Domain/File';
-import RequestFiles from "@/Infrastructure/RequestFiles"
-import ProcessFile from "@/Domain/ProcessFile"
-import FileComponent from "@/components/File.vue"
+    import Vue from "vue";
+    import Reader from "@/components/Reader.vue";
+    import ConfigPanel from "@/components/ConfigPanel.vue";
 
-export default Vue.extend({
-    name: "AppContainer",
-    data : () => ({
-        files : [] as File[],
-        loading : false
-    }),
-    components: { FileComponent },
-    methods : {
-        async getFiles() {
-            const files = await RequestFiles()
-            this.files.push(...files)            
-        },
-        async processFiles() {
-            this.loading = true;
-            this.files.forEach(file => {
-                if (!file.isProcessed()){
-                    ProcessFile(file).then((name) => {
-                        file.process(name)
-                    }).catch(e => {
-                        file.setError(e)
-                    });
-                }
-            })
-            this.loading = false;
-        }
-    }
-})
-
+    export default Vue.extend({
+        name: "AppContainer",
+        data: () => ({
+            tab: 0,
+        }),
+        components: { Reader, ConfigPanel },
+    });
 </script>
