@@ -2,7 +2,7 @@ import ExcelJS from "exceljs/dist/es5/exceljs.browser";
 import GetSalesSubtotal from "../Application/GetSalesSubtotal";
 import ListNotFound from "./ListNotFound";
 import Sale from "./Sale";
-import FindSale from "../Infrastructure/SaleFinder";
+import FindSale from "../Application/SaleFinder";
 import File from "@/Domain/File";
 
 export default async function ProcessFile(fileToRead: File): Promise<string> {

@@ -1,13 +1,16 @@
 import ListNotFound from "@/Domain/ListNotFound";
 import Config from "@/Domain/Config";
-import ConfigFileRepository from "./ConfigFileRepository";
+import ConfigFileRepository from "../Infrastructure/ConfigFileRepository";
 
 export default function FindSaleName(listType: string, machineId: string, line: string): string {
-    const name = getList(listType)
-        .find((machine) => machine.id == machineId)!
-        .items.find((item) => item.line == line)!.name;
+    const machines = getList(listType);
 
-    return name;
+    let machine = machines[0];
+    if (machines.length > 1) {
+        machine = machines.find((machine) => machine.id == machineId)!;
+    }
+
+    return machine.items.find((item) => item.line == line)!.name;
 }
 
 function getList(type: string): Config[] {
