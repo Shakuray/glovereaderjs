@@ -36,17 +36,18 @@ export default async function ProcessFile(fileToRead: File): Promise<string> {
         }
 
         if (excelRow.isSale) {
-            try {
-                sales.push(
-                    new Sale(excelRow.machine, excelRow.line, excelRow.date, excelRow.matricula, FindSale(listType, excelRow.machine, excelRow.line))
-                );
-            } catch (e) {
-                if (e instanceof ListNotFound) {
-                    console.log(e.message + " in file " + fileToRead);
-                }
-            }
+            sales.push(
+                new Sale(
+                    excelRow.machine,
+                    excelRow.line,
+                    excelRow.date,
+                    excelRow.matricula,
+                    FindSale(listType, excelRow.machine, excelRow.line)
+                )
+            );
         }
     });
+
 
     let filter = workbook.getWorksheet("Filtre");
     if (filter == undefined) {
@@ -85,7 +86,9 @@ export default async function ProcessFile(fileToRead: File): Promise<string> {
         },
     ];
 
-    const pathToSave = fileToRead.toString().substring(0, fileToRead.toString().lastIndexOf("\\") + 1);
+    const pathToSave = fileToRead
+        .toString()
+        .substring(0, fileToRead.toString().lastIndexOf("\\") + 1);
 
     await workbook.xlsx.writeFile(`${pathToSave}/${listType}.xlsx`);
     console.log(`${pathToSave}/${listType}.xlsx`);
