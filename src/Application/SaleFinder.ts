@@ -21,9 +21,9 @@ function getList(type: string): Config[] {
         return files.find((file) => file.name == "ITW FAST")!.data;
     if (text.includes("ESPA")) return files.find((file) => file.name == "ESPARRAGUERA")!.data;
     if (text.includes("ZARA")) return files.find((file) => file.name == "ZARAGOZA")!.data;
-    if (text.includes("ALEM")) return files.find((file) => file.name == "ALEMANYA")!.data;
-    if (text.includes("COMP") || text.includes("1K"))
-        return files.find((file) => file.name == "ITW COMP")!.data;
+    if (text.includes("ALEM") || text.includes("1K"))
+        return files.find((file) => file.name == "ALEMANYA")!.data;
+    if (text.includes("COMP")) return files.find((file) => file.name == "ITW COMP")!.data;
     if (text.includes("GAR") || text.includes("LG"))
         return files.find((file) => file.name == "LA GARRIGA")!.data;
     else throw new ListNotFound(type);
