@@ -1,16 +1,17 @@
-[   {
-        "id" : "00333333",
-        "items" : [
-            {"line" : "1", "name" : "ECOPU 7"},
-            {"line" : "2", "name" : "ECOPU 8"},
-            {"line" : "3", "name" : "ECOPU 9"},
-            {"line" : "4", "name" : "ECOPU 10"},
-            {"line" : "5", "name" : "JUBA 416 +7"},
-            {"line" : "6", "name" : "JUBA 416 +8"},
-            {"line" : "7", "name" : "CASCO AUD"},
-            {"line" : "8", "name" : "TUFF JUBA 416 +9"},
-            {"line" : "9", "name" : "GAFAS"},
-            {"line" : "10", "name" : "MASCARILLA"}
+[
+    {
+        "id": "00333333",
+        "items": [
+            { "line": "1", "name": "ECOPU T7" },
+            { "line": "2", "name": "ECOPU T8" },
+            { "line": "3", "name": "ECOPU T9" },
+            { "line": "4", "name": "ECOPU T10" },
+            { "line": "5", "name": "JUBA 416 T7" },
+            { "line": "6", "name": "JUBA 416 T8" },
+            { "line": "7", "name": "DIADEMA 3M" },
+            { "line": "8", "name": "JUBA 416 T9" },
+            { "line": "9", "name": "ULLERES" },
+            { "line": "10", "name": "CUTER MARTOR" }
         ]
     }
 ]
