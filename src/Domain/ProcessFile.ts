@@ -86,9 +86,9 @@ export default async function ProcessFile(fileToRead: File): Promise<string> {
         },
     ];
 
-    const pathToSave = fileToRead
-        .toString()
-        .substring(0, fileToRead.toString().lastIndexOf("\\") + 1);
+    const fullPath = fileToRead.toString();
+    const lastSep = Math.max(fullPath.lastIndexOf("/"), fullPath.lastIndexOf("\\"));
+    const pathToSave = fullPath.substring(0, lastSep);
 
     await workbook.xlsx.writeFile(`${pathToSave}/${listType}.xlsx`);
     console.log(`${pathToSave}/${listType}.xlsx`);
