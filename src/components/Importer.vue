@@ -1,55 +1,61 @@
 <template>
     <div class="pa-3" style="height: calc(100vh - 48px); overflow-y: auto">
-        <v-btn color="secondary" :loading="reading" @click="openFile()"> <v-icon left>mdi-magnify</v-icon> Buscar </v-btn>
+        <v-btn color="secondary" :loading="reading" prepend-icon="mdi-magnify" @click="openFile()">Buscar</v-btn>
 
-        <v-alert v-if="error || filterResult.error" type="error" class="mt-3" dense>{{ error || filterResult.error }}</v-alert>
+        <v-alert v-if="error || filterResult.error" type="error" class="mt-3" density="compact">{{ error || filterResult.error }}</v-alert>
 
         <template v-if="report">
-            <div class="mt-3 text-subtitle-1"><v-icon left>mdi-file-excel-outline</v-icon>{{ report.listType }}</div>
-            <div class="text-caption text--secondary">{{ file.toString() }}</div>
+            <div class="mt-3 text-subtitle-1"><v-icon start>mdi-file-excel-outline</v-icon>{{ report.listType }}</div>
+            <div class="text-caption text-medium-emphasis">{{ file?.toString() }}</div>
 
-            <v-menu v-model="pickerOpen" :close-on-content-click="false" offset-y min-width="auto">
-                <template v-slot:activator="{ on, attrs }">
+            <v-menu v-model="pickerOpen" :close-on-content-click="false" location="bottom" min-width="auto">
+                <template v-slot:activator="{ props }">
                     <v-text-field
-                        :value="rangeText"
+                        :model-value="rangeText"
                         label="Rango de fechas (opcional)"
                         prepend-icon="mdi-calendar-range"
                         class="mt-4"
                         readonly
                         clearable
                         @click:clear="range = []"
-                        v-bind="attrs"
-                        v-on="on"
+                        v-bind="props"
                     />
                 </template>
-                <v-date-picker v-model="range" :picker-date.sync="pickerMonth" range no-title locale="es-ES" first-day-of-week="1" />
+                <v-date-picker
+                    v-model="range"
+                    v-model:month="pickerMonth"
+                    v-model:year="pickerYear"
+                    multiple="range"
+                    hide-header
+                    first-day-of-week="1"
+                />
             </v-menu>
 
-            <v-chip small :color="isFiltered ? 'primary' : undefined"> {{ filteredSales.length }} de {{ report.sales.length }} ventas </v-chip>
+            <v-chip size="small" :color="isFiltered ? 'primary' : undefined"> {{ filteredSales.length }} de {{ report.sales.length }} ventas </v-chip>
 
             <v-tabs v-model="previewTab" class="mt-2" grow>
-                <v-tab>Resumen</v-tab>
-                <v-tab>Ventas</v-tab>
+                <v-tab :value="0">Resumen</v-tab>
+                <v-tab :value="1">Ventas</v-tab>
             </v-tabs>
-            <v-tabs-items v-model="previewTab">
-                <v-tab-item>
+            <v-window v-model="previewTab">
+                <v-window-item :value="0">
                     <v-data-table :headers="subtotalHeaders" :items="subtotals" v-bind="tableProps" />
-                </v-tab-item>
-                <v-tab-item>
+                </v-window-item>
+                <v-window-item :value="1">
                     <v-data-table :headers="saleHeaders" :items="filteredSales" v-bind="tableProps" />
-                </v-tab-item>
-            </v-tabs-items>
+                </v-window-item>
+            </v-window>
 
-            <v-btn class="mt-4" color="primary" :loading="exporting" :disabled="filteredSales.length == 0" @click="exportFile()">
-                <v-icon left>mdi-export</v-icon> Exportar
+            <v-btn class="mt-4" color="primary" :loading="exporting" :disabled="filteredSales.length == 0" prepend-icon="mdi-export" @click="exportFile()">
+                Exportar
             </v-btn>
-            <v-alert v-if="savedFile" type="success" class="mt-3" dense>Descargado: {{ savedFile }}</v-alert>
+            <v-alert v-if="savedFile" type="success" class="mt-3" density="compact">Descargado: {{ savedFile }}</v-alert>
         </template>
     </div>
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
+    import { defineComponent } from "vue";
     import File from "@/Domain/File";
     import Sale from "@/Domain/Sale";
     import SalesReport from "@/Domain/SalesReport";
@@ -63,60 +69,59 @@
 
     const repository = new ExcelSalesFileRepository();
 
-    /** Converts the "yyyy-mm-dd" values used by v-date-picker to local dates */
-    function fromPickerDate(value: string): Date {
-        const [year, month, day] = value.split("-").map(Number);
-        return new Date(year, month - 1, day);
+    function toDisplayDate(date: Date): string {
+        return [date.getDate(), date.getMonth() + 1].map((n) => String(n).padStart(2, "0")).join("/") + "/" + date.getFullYear();
     }
 
-    function toDisplayDate(value: string): string {
-        return value.split("-").reverse().join("/");
-    }
-
-    export default Vue.extend({
+    export default defineComponent({
         name: "Importer",
         data: () => ({
             file: undefined as File | undefined,
             report: undefined as SalesReport | undefined,
-            range: [] as string[],
+            /** v-date-picker fills a range with every day between the picked ones */
+            range: [] as Date[],
             pickerOpen: false,
-            pickerMonth: undefined as string | undefined,
+            pickerMonth: undefined as number | undefined,
+            pickerYear: undefined as number | undefined,
             previewTab: 0,
             reading: false,
             exporting: false,
             savedFile: "",
             error: "",
             subtotalHeaders: [
-                { text: "Producto", value: "itemName" },
-                { text: "Cantidad", value: "ammount", align: "end" },
+                { title: "Producto", key: "itemName" },
+                { title: "Cantidad", key: "ammount", align: "end" as const },
             ],
             saleHeaders: [
-                { text: "Fecha", value: "date" },
-                { text: "Máquina", value: "machine" },
-                { text: "Línea", value: "line" },
-                { text: "Producto", value: "item" },
+                { title: "Fecha", key: "date" },
+                { title: "Máquina", key: "machine" },
+                { title: "Línea", key: "line" },
+                { title: "Producto", key: "item" },
             ],
             tableProps: {
-                dense: true,
+                density: "compact" as const,
                 fixedHeader: true,
                 height: "calc(100vh - 470px)",
-                disablePagination: true,
+                itemsPerPage: -1,
                 hideDefaultFooter: true,
             },
         }),
         computed: {
-            sortedRange(): string[] {
-                return [...this.range].sort();
+            rangeEnds(): Date[] {
+                if (this.range.length == 0) return [];
+                const times = this.range.map((date) => date.getTime());
+                const [from, to] = [Math.min(...times), Math.max(...times)];
+                return from == to ? [new Date(from)] : [new Date(from), new Date(to)];
             },
             dateRange(): DateRange {
-                const [from, to] = this.sortedRange.map(fromPickerDate);
+                const [from, to] = this.rangeEnds;
                 return DateRange.between(from, to);
             },
             isFiltered(): boolean {
                 return this.dateRange.isBounded();
             },
             rangeText(): string {
-                return this.sortedRange.map(toDisplayDate).join(" – ");
+                return this.rangeEnds.map(toDisplayDate).join(" – ");
             },
             filterResult(): { sales: Sale[]; error: string } {
                 if (this.report == undefined) return { sales: [], error: "" };
@@ -148,7 +153,7 @@
                 try {
                     this.report = await ReadSalesFile(repository, file);
                     this.file = file;
-                    this.pickerMonth = this.firstSaleMonth(this.report);
+                    this.showFirstSaleMonth(this.report);
                 } catch (e) {
                     this.error = String(e);
                 } finally {
@@ -178,13 +183,14 @@
                 this.savedFile = "";
                 this.error = "";
             },
-            firstSaleMonth(report: SalesReport): string | undefined {
-                if (report.sales.length == 0) return undefined;
+            showFirstSaleMonth(report: SalesReport) {
+                if (report.sales.length == 0) return;
                 try {
                     const date = report.sales[0].transactionDate();
-                    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+                    this.pickerMonth = date.getMonth();
+                    this.pickerYear = date.getFullYear();
                 } catch (e) {
-                    return undefined;
+                    // Keep the picker on the current month
                 }
             },
         },

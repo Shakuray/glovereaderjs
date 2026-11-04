@@ -1,6 +1,6 @@
 <template>
     <v-app>
-        <v-main class="height:calc(100vh)">
+        <v-main>
             <v-container fluid>
                 <AppContainer />
             </v-container>
@@ -9,20 +9,16 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from "vue-property-decorator";
+    import { defineComponent } from "vue";
     import AppContainer from "./AppContainer.vue";
 
-    @Component({
+    export default defineComponent({
+        name: "App",
         components: { AppContainer },
-    })
-    export default class App extends Vue {
-        data() {
-            return {};
-        }
-    }
+    });
 </script>
 
-<style lang="scss">
+<style lang="css">
     html,
     body {
         overflow-y: hidden;
@@ -37,15 +33,9 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
-        color: #2c3e50;
     }
 
-    .container {
+    .v-container {
         padding: 0px !important;
-    }
-
-    html,
-    body {
-        overflow-y: hidden;
     }
 </style>

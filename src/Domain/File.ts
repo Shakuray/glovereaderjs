@@ -2,7 +2,7 @@ export default class File {
     public name: string;
     public error: string;
 
-    constructor(private fileName: string, private content: Blob) {
+    constructor(readonly fileName: string, readonly content: Blob) {
         this.name = "";
         this.error = "";
     }

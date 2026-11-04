@@ -117,3 +117,7 @@ dist_electron
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+# Client spreadsheets must never be committed
+files/
+*.xls
+*.xlsx

@@ -6,7 +6,9 @@ Transforms and filter vending machine excel files
 
 ```
 npm start        # local dev server
-npm run build    # static site in dist/
+npm test         # unit tests
+npm run lint     # eslint
+npm run build    # type check + static site in dist/
 ```
 
 `dist/` is a static site that can be served from any folder. Every push to `main` deploys it to GitHub Pages (see `.github/workflows/deploy.yml`).

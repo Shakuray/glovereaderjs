@@ -1,8 +1,8 @@
 <template>
     <div>
-        <v-tabs v-model="tab" bg-color="primary">
-            <v-tab :value="0"> <v-icon left>mdi-file</v-icon> Reader</v-tab>
-            <v-tab :value="1"> <v-icon left>mdi-calendar-range</v-icon> Importar</v-tab>
+        <v-tabs v-model="tab" bg-color="primary" grow>
+            <v-tab :value="0" prepend-icon="mdi-file">Reader</v-tab>
+            <v-tab :value="1" prepend-icon="mdi-calendar-range">Importar</v-tab>
         </v-tabs>
         <v-window v-model="tab">
             <v-window-item :value="0"><Reader /></v-window-item>
@@ -12,15 +12,15 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
+    import { defineComponent } from "vue";
     import Reader from "@/components/Reader.vue";
     import Importer from "@/components/Importer.vue";
 
-    export default Vue.extend({
+    export default defineComponent({
         name: "AppContainer",
+        components: { Reader, Importer },
         data: () => ({
             tab: 0,
         }),
-        components: { Reader, Importer },
     });
 </script>

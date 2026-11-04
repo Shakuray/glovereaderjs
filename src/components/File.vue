@@ -1,5 +1,5 @@
 <template>
-    <v-card class="ma-3" outlined>
+    <v-card class="ma-3" variant="outlined">
         <v-container>
             <v-alert v-if="file.error != ''" type="error">{{ file.error }}</v-alert>
             <v-icon v-if="file.error" color="error">mdi-close</v-icon>
@@ -12,13 +12,13 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
+    import { defineComponent, PropType } from "vue";
     import File from "@/Domain/File";
 
-    export default Vue.extend({
-        name: "File",
+    export default defineComponent({
+        name: "FileItem",
         props: {
-            file: File,
+            file: { type: Object as PropType<File>, required: true },
         },
     });
 </script>

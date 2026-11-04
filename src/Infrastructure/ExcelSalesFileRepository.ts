@@ -1,4 +1,4 @@
-import ExcelJS from "exceljs/dist/es5/exceljs.browser";
+import ExcelJS from "exceljs";
 import SalesFileRepository from "@/Domain/Contract/SalesFileRepository";
 import File from "@/Domain/File";
 import SalesReport from "@/Domain/SalesReport";
@@ -15,6 +15,7 @@ export default class ExcelSalesFileRepository implements SalesFileRepository {
     async read(file: File): Promise<SalesSheet> {
         const workbook = await this.load(file);
         const worksheet = workbook.getWorksheet(SOURCE_SHEET);
+        if (worksheet == undefined) throw new Error(`No se encuentra la hoja "${SOURCE_SHEET}"`);
 
         const records = [] as SaleRecord[];
         let listType = "";

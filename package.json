@@ -1,76 +1,36 @@
 {
     "name": "glovereaderjs",
     "version": "1.1.3",
-    "description": "",
+    "description": "Transforms and filter vending machine excel files",
+    "private": true,
+    "type": "module",
     "scripts": {
-        "build": "vue-cli-service build",
-        "start": "vue-cli-service serve"
+        "start": "vite",
+        "build": "vue-tsc --noEmit && vite build",
+        "preview": "vite preview",
+        "test": "vitest run",
+        "lint": "eslint ."
     },
     "author": "Joan Mas",
     "license": "ISC",
-    "devDependencies": {
-        "@babel/preset-typescript": "^7.16.0",
-        "@types/node": "^16.11.10",
-        "@types/webpack": "^4.41.32",
-        "@typescript-eslint/eslint-plugin": "^2.33.0",
-        "@typescript-eslint/parser": "^2.33.0",
-        "@vue/cli-plugin-babel": "^4.5.15",
-        "@vue/cli-plugin-eslint": "^4.5.15",
-        "@vue/cli-plugin-typescript": "^4.5.15",
-        "@vue/cli-service": "^4.5.15",
-        "@vue/eslint-config-typescript": "^5.1.0",
-        "@vue/test-utils": "^1.3.0",
-        "babel-core": "^7.0.0-bridge.0",
-        "babel-eslint": "^10.1.0",
-        "eslint": "^6.7.2",
-        "eslint-plugin-vue": "^6.2.2",
-        "jest": "^27.3.1",
-        "jest-transform-stub": "^2.0.0",
-        "jsdom-global": "^3.0.2",
-        "material-design-icons-iconfont": "^5.0.1",
-        "sass": "^1.43.4",
-        "sass-loader": "^8.0.0",
-        "ts-jest": "^27.0.7",
-        "ts-loader": "^8.3.0",
-        "tslib": "^2.9.1",
-        "typescript": "^3.9.10",
-        "vue-cli-plugin-vuetify": "^2.4.4",
-        "vue-jest": "^3.0.7",
-        "vue-template-compiler": "^2.6.14",
-        "vuetify-loader": "^1.7.3"
-    },
     "dependencies": {
-        "@mdi/font": "^6.5.95",
-        "@types/jest": "^27.0.3",
-        "core-js": "^3.19.1",
-        "exceljs": "^4.3.0",
-        "vue": "^2.6.14",
-        "vue-class-component": "^7.2.6",
-        "vue-lang-code-flags": "^1.0.13",
-        "vue-property-decorator": "^8.4.2",
-        "vuetify": "^2.6.0"
+        "@mdi/font": "^7.4.47",
+        "exceljs": "^4.4.0",
+        "vue": "^3.5.44",
+        "vuetify": "^4.3.2"
     },
-    "eslintConfig": {
-        "root": true,
-        "env": {
-            "node": true
-        },
-        "extends": [
-            "plugin:vue/essential",
-            "eslint:recommended",
-            "@vue/typescript"
-        ],
-        "parserOptions": {
-            "parser": "@typescript-eslint/parser"
-        },
-        "rules": {
-            "no-debugger": 0,
-            "no-unused-vars": "off"
-        }
-    },
-    "browserslist": [
-        "> 1%",
-        "last 2 versions",
-        "not dead"
-    ]
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "@types/node": "^26.6.6",
+        "@vitejs/plugin-vue": "^6.0.10",
+        "eslint": "^10.14.0",
+        "eslint-plugin-vue": "^10.12.0",
+        "globals": "^17.14.0",
+        "typescript": "~6.0",
+        "typescript-eslint": "^8.72.1",
+        "vite": "^8.3.5",
+        "vite-plugin-vuetify": "^2.1.3",
+        "vitest": "^5.1.0",
+        "vue-tsc": "^3.3.14"
+    }
 }
