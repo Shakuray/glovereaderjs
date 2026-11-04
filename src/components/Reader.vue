@@ -16,7 +16,8 @@
     import Vue from "vue";
     import File from "@/Domain/File";
     import RequestFiles from "@/Infrastructure/RequestFiles";
-    import ProcessFile from "@/Domain/ProcessFile";
+    import ProcessFile from "@/Application/ProcessFile";
+    import ExcelSalesFileRepository from "@/Infrastructure/ExcelSalesFileRepository";
     import FileComponent from "@/components/File.vue";
 
     export default Vue.extend({
@@ -33,9 +34,10 @@
             },
             async processFiles() {
                 this.loading = true;
+                const repository = new ExcelSalesFileRepository();
                 this.files.forEach((file) => {
                     if (!file.isProcessed()) {
-                        ProcessFile(file)
+                        ProcessFile(repository, file)
                             .then((name) => {
                                 file.process(name);
                             })
