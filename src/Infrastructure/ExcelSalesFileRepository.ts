@@ -4,10 +4,12 @@ import File from "@/Domain/File";
 import SalesReport from "@/Domain/SalesReport";
 import SalesSheet, { SaleRecord } from "@/Domain/SalesSheet";
 import Subtotal from "@/Domain/Subtotal";
+import DownloadFile from "./DownloadFile";
 
 const SOURCE_SHEET = "TManager";
 const FILTER_SHEET = "Filtre";
 const SALE_TRANSACTION = "Venta Price Holding";
+const XLSX_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
 export default class ExcelSalesFileRepository implements SalesFileRepository {
     async read(file: File): Promise<SalesSheet> {
@@ -90,20 +92,14 @@ export default class ExcelSalesFileRepository implements SalesFileRepository {
             },
         ];
 
-        const pathToSave = `${this.directoryOf(file)}/${report.listType}.xlsx`;
-        await workbook.xlsx.writeFile(pathToSave);
-        return pathToSave;
+        const fileName = `${report.listType}.xlsx`;
+        DownloadFile(fileName, await workbook.xlsx.writeBuffer(), XLSX_TYPE);
+        return fileName;
     }
 
     private async load(file: File) {
         const workbook = new ExcelJS.Workbook();
-        await workbook.xlsx.readFile(file.toString());
+        await workbook.xlsx.load(await file.contents());
         return workbook;
-    }
-
-    private directoryOf(file: File): string {
-        const fullPath = file.toString();
-        const lastSep = Math.max(fullPath.lastIndexOf("/"), fullPath.lastIndexOf("\\"));
-        return fullPath.substring(0, lastSep);
     }
 }

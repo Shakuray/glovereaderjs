@@ -3,6 +3,9 @@ const origCreateHash = crypto.createHash
 crypto.createHash = (algorithm) => origCreateHash(algorithm === 'md4' ? 'sha256' : algorithm)
 
 module.exports = {
+  // Relative paths so the build works from any folder, e.g. a GitHub Pages project site
+  publicPath: './',
+
   "transpileDependencies": [
     "vuetify"
   ],
@@ -26,15 +29,6 @@ module.exports = {
       fallbackLocale: 'en',
       localeDir: 'locales',
       enableInSFC: false
-    },
-    electronBuilder: {
-      enableRemoteModule: true,
-      nodeIntegration: true,
-      builderOptions: {
-        win : {
-          icon : "public/favicon.ico"
-        }
-      }
     }
   }
 }

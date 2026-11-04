@@ -5,14 +5,15 @@ Transforms and filter vending machine excel files
 ### Build 📦
 
 ```
-npm run electron:build
+npm start        # local dev server
+npm run build    # static site in dist/
 ```
 
-Use the `dist_electron\win-unpacked` version and execute it with `glovereaderjs.exe`.
+`dist/` is a static site that can be served from any folder. Every push to `main` deploys it to GitHub Pages (see `.github/workflows/deploy.yml`).
 
 ### Config ⚙️
 
-All config json files should be placed at `src/config` folder. Use one file for each config. f.i. `ALEMANYA.json`
+All config json files should be placed at `src/config` folder. Use one file for each config. f.i. `ALEMANYA.json`. Configs are bundled into the app at build time, so rebuild after changing them (new files must also be added to `src/Infrastructure/StaticConfigRepository.ts`).
 
 ```json
 [
@@ -38,4 +39,4 @@ All config json files should be placed at `src/config` folder. Use one file for 
 
 ### Use 💻
 
-Simply execute `glovereader.js` and upload your excel files. All transformed files should be placed at the same location.
+Open the web app and select your excel files. Everything is processed in the browser, files are never uploaded anywhere. Transformed files are downloaded by the browser.

@@ -1,6 +1,6 @@
 import ListNotFound from "@/Domain/ListNotFound";
 import Config from "@/Domain/Config";
-import ConfigFileRepository from "../Infrastructure/ConfigFileRepository";
+import StaticConfigRepository from "../Infrastructure/StaticConfigRepository";
 
 export default function FindSaleName(listType: string, machineId: string, line: string): string {
     const machines = getList(listType);
@@ -14,7 +14,7 @@ export default function FindSaleName(listType: string, machineId: string, line: 
 }
 
 function getList(type: string): Config[] {
-    const repo = new ConfigFileRepository();
+    const repo = new StaticConfigRepository();
     const files = repo.get();
     const text = type.toUpperCase();
     if (text.includes("FAST") || text.includes("2K"))

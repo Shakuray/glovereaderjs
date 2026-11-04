@@ -43,7 +43,7 @@
             <v-btn class="mt-4" color="primary" :loading="exporting" :disabled="filteredSales.length == 0" @click="exportFile()">
                 <v-icon left>mdi-export</v-icon> Exportar
             </v-btn>
-            <v-alert v-if="savedPath" type="success" class="mt-3" dense>{{ savedPath }}</v-alert>
+            <v-alert v-if="savedFile" type="success" class="mt-3" dense>Descargado: {{ savedFile }}</v-alert>
         </template>
     </div>
 </template>
@@ -84,7 +84,7 @@
             previewTab: 0,
             reading: false,
             exporting: false,
-            savedPath: "",
+            savedFile: "",
             error: "",
             subtotalHeaders: [
                 { text: "Producto", value: "itemName" },
@@ -135,7 +135,7 @@
         },
         watch: {
             dateRange() {
-                this.savedPath = "";
+                this.savedFile = "";
             },
         },
         methods: {
@@ -161,7 +161,7 @@
                 this.exporting = true;
                 this.error = "";
                 try {
-                    this.savedPath = await ExportSalesReport(repository, this.file, {
+                    this.savedFile = await ExportSalesReport(repository, this.file, {
                         listType: this.report.listType,
                         sales: this.filteredSales,
                     });
@@ -175,7 +175,7 @@
                 this.file = undefined;
                 this.report = undefined;
                 this.range = [];
-                this.savedPath = "";
+                this.savedFile = "";
                 this.error = "";
             },
             firstSaleMonth(report: SalesReport): string | undefined {

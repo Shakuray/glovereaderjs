@@ -1,10 +1,7 @@
 import File from "@/Domain/File";
-import { remote } from "electron";
+import OpenFileDialog from "./OpenFileDialog";
 
 export default async function RequestFile(): Promise<File | undefined> {
-    const result = await remote.dialog.showOpenDialog({
-        properties: ["openFile"],
-        filters: [{ name: "Excel", extensions: ["xlsx"] }],
-    });
-    return result.canceled || result.filePaths.length == 0 ? undefined : new File(result.filePaths[0]);
+    const [file] = await OpenFileDialog({ accept: ".xlsx", multiple: false });
+    return file == undefined ? undefined : new File(file.name, file);
 }

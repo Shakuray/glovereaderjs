@@ -1,7 +1,7 @@
 import File from "@/Domain/File";
-import { remote } from "electron";
+import OpenFileDialog from "./OpenFileDialog";
 
 export default async function RequestFiles(): Promise<File[]> {
-    const files = await remote.dialog.showOpenDialog({ properties: ["openFile", "multiSelections"] });
-    return files.filePaths.map((path) => new File(path));
+    const files = await OpenFileDialog({ accept: ".xlsx", multiple: true });
+    return files.map((file) => new File(file.name, file));
 }
