@@ -5,7 +5,7 @@ import { en, es, ca, pt } from "vuetify/locale";
 
 export default createVuetify({
     locale: {
-        locale: "es",
+        locale: "en",
         fallback: "en",
         messages: { en, es, ca, pt },
     },

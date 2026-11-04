@@ -1,56 +1,86 @@
 <template>
-    <div class="pa-3" style="height: calc(100vh - 48px); overflow-y: auto">
-        <v-btn color="secondary" :loading="reading" prepend-icon="mdi-magnify" @click="openFile()">Buscar</v-btn>
+    <div>
+        <v-alert v-if="error || filterResult.error" type="error" class="mb-4" density="compact">{{ error || filterResult.error }}</v-alert>
 
-        <v-alert v-if="error || filterResult.error" type="error" class="mt-3" density="compact">{{ error || filterResult.error }}</v-alert>
+        <v-row v-if="!report" justify="center">
+            <v-col cols="12" md="8" lg="6">
+                <v-card class="text-center pa-12">
+                    <v-icon size="64" class="mb-4 text-medium-emphasis">mdi-file-excel-outline</v-icon>
+                    <div class="text-h6">Import a file</div>
+                    <div class="text-medium-emphasis mb-6">Choose an Excel file to filter its sales by date and export them</div>
+                    <v-btn color="primary" size="large" :loading="reading" prepend-icon="mdi-magnify" @click="openFile()">Browse</v-btn>
+                </v-card>
+            </v-col>
+        </v-row>
 
-        <template v-if="report">
-            <div class="mt-3 text-subtitle-1"><v-icon start>mdi-file-excel-outline</v-icon>{{ report.listType }}</div>
-            <div class="text-caption text-medium-emphasis">{{ file?.toString() }}</div>
+        <v-row v-else>
+            <v-col cols="12" md="5" lg="4">
+                <v-card>
+                    <v-card-item :title="report.listType" :subtitle="file?.toString()">
+                        <template v-slot:prepend><v-icon size="large" color="primary">mdi-file-excel-outline</v-icon></template>
+                        <template v-slot:append>
+                            <v-btn variant="text" :loading="reading" prepend-icon="mdi-magnify" @click="openFile()">Change</v-btn>
+                        </template>
+                    </v-card-item>
+                </v-card>
 
-            <v-menu v-model="pickerOpen" :close-on-content-click="false" location="bottom" min-width="auto">
-                <template v-slot:activator="{ props }">
-                    <v-text-field
-                        :model-value="rangeText"
-                        label="Rango de fechas (opcional)"
-                        prepend-icon="mdi-calendar-range"
-                        class="mt-4"
-                        readonly
-                        clearable
-                        @click:clear="range = []"
-                        v-bind="props"
-                    />
-                </template>
-                <v-date-picker
-                    v-model="range"
-                    v-model:month="pickerMonth"
-                    v-model:year="pickerYear"
-                    multiple="range"
-                    hide-header
-                    first-day-of-week="1"
-                />
-            </v-menu>
+                <v-card class="mt-4">
+                    <v-card-item title="Date range" subtitle="Optional: without a range all sales are exported">
+                        <template v-slot:prepend><v-icon>mdi-calendar-range</v-icon></template>
+                    </v-card-item>
+                    <div class="d-flex justify-center">
+                        <v-date-picker
+                            v-model="range"
+                            v-model:month="pickerMonth"
+                            v-model:year="pickerYear"
+                            multiple="range"
+                            hide-header
+                            first-day-of-week="1"
+                            bg-color="transparent"
+                        />
+                    </div>
+                    <v-card-actions class="px-4">
+                        <span :class="isFiltered ? '' : 'text-medium-emphasis'">{{ rangeText || "All dates" }}</span>
+                        <v-spacer />
+                        <v-btn v-if="isFiltered" variant="text" prepend-icon="mdi-close" @click="range = []">Clear</v-btn>
+                    </v-card-actions>
+                </v-card>
 
-            <v-chip size="small" :color="isFiltered ? 'primary' : undefined"> {{ filteredSales.length }} de {{ report.sales.length }} ventas </v-chip>
+                <v-btn
+                    class="mt-4"
+                    block
+                    size="large"
+                    color="primary"
+                    :loading="exporting"
+                    :disabled="filteredSales.length == 0"
+                    prepend-icon="mdi-export"
+                    @click="exportFile()"
+                >
+                    Export {{ filteredSales.length }} of {{ report.sales.length }} sales
+                </v-btn>
+                <v-alert v-if="savedFile" type="success" class="mt-4" density="compact">Downloaded: {{ savedFile }}</v-alert>
+            </v-col>
 
-            <v-tabs v-model="previewTab" class="mt-2" grow>
-                <v-tab :value="0">Resumen</v-tab>
-                <v-tab :value="1">Ventas</v-tab>
-            </v-tabs>
-            <v-window v-model="previewTab">
-                <v-window-item :value="0">
-                    <v-data-table :headers="subtotalHeaders" :items="subtotals" v-bind="tableProps" />
-                </v-window-item>
-                <v-window-item :value="1">
-                    <v-data-table :headers="saleHeaders" :items="filteredSales" v-bind="tableProps" />
-                </v-window-item>
-            </v-window>
-
-            <v-btn class="mt-4" color="primary" :loading="exporting" :disabled="filteredSales.length == 0" prepend-icon="mdi-export" @click="exportFile()">
-                Exportar
-            </v-btn>
-            <v-alert v-if="savedFile" type="success" class="mt-3" density="compact">Descargado: {{ savedFile }}</v-alert>
-        </template>
+            <v-col cols="12" md="7" lg="8">
+                <v-card>
+                    <v-tabs v-model="previewTab">
+                        <v-tab :value="0">Summary <v-chip class="ml-2" size="x-small">{{ subtotals.length }}</v-chip></v-tab>
+                        <v-tab :value="1">
+                            Sales <v-chip class="ml-2" size="x-small" :color="isFiltered ? 'primary' : undefined">{{ filteredSales.length }}</v-chip>
+                        </v-tab>
+                    </v-tabs>
+                    <v-divider />
+                    <v-window v-model="previewTab">
+                        <v-window-item :value="0">
+                            <v-data-table :headers="subtotalHeaders" :items="subtotals" v-bind="tableProps" />
+                        </v-window-item>
+                        <v-window-item :value="1">
+                            <v-data-table :headers="saleHeaders" :items="filteredSales" v-bind="tableProps" />
+                        </v-window-item>
+                    </v-window>
+                </v-card>
+            </v-col>
+        </v-row>
     </div>
 </template>
 
@@ -80,7 +110,6 @@
             report: undefined as SalesReport | undefined,
             /** v-date-picker fills a range with every day between the picked ones */
             range: [] as Date[],
-            pickerOpen: false,
             pickerMonth: undefined as number | undefined,
             pickerYear: undefined as number | undefined,
             previewTab: 0,
@@ -89,19 +118,19 @@
             savedFile: "",
             error: "",
             subtotalHeaders: [
-                { title: "Producto", key: "itemName" },
-                { title: "Cantidad", key: "ammount", align: "end" as const },
+                { title: "Product", key: "itemName" },
+                { title: "Quantity", key: "ammount", align: "end" as const },
             ],
             saleHeaders: [
-                { title: "Fecha", key: "date" },
-                { title: "Máquina", key: "machine" },
-                { title: "Línea", key: "line" },
-                { title: "Producto", key: "item" },
+                { title: "Date", key: "date" },
+                { title: "Machine", key: "machine" },
+                { title: "Line", key: "line" },
+                { title: "Product", key: "item" },
             ],
             tableProps: {
                 density: "compact" as const,
                 fixedHeader: true,
-                height: "calc(100vh - 470px)",
+                height: "calc(100vh - 170px)",
                 itemsPerPage: -1,
                 hideDefaultFooter: true,
             },

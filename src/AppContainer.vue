@@ -1,14 +1,19 @@
 <template>
-    <div>
-        <v-tabs v-model="tab" bg-color="primary" grow>
-            <v-tab :value="0" prepend-icon="mdi-file">Reader</v-tab>
-            <v-tab :value="1" prepend-icon="mdi-calendar-range">Importar</v-tab>
+    <v-app-bar color="primary" density="comfortable" flat>
+        <v-tabs v-model="tab">
+            <v-tab :value="0" prepend-icon="mdi-file-excel-outline">Import</v-tab>
+            <v-tab :value="1" prepend-icon="mdi-file-multiple-outline">Mass import</v-tab>
         </v-tabs>
-        <v-window v-model="tab">
-            <v-window-item :value="0"><Reader /></v-window-item>
-            <v-window-item :value="1"><Importer /></v-window-item>
-        </v-window>
-    </div>
+    </v-app-bar>
+
+    <v-main>
+        <v-container class="mx-auto" style="max-width: 1600px">
+            <v-window v-model="tab">
+                <v-window-item :value="0"><Importer /></v-window-item>
+                <v-window-item :value="1"><Reader /></v-window-item>
+            </v-window>
+        </v-container>
+    </v-main>
 </template>
 
 <script lang="ts">
