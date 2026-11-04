@@ -2,7 +2,7 @@
     <div>
         <v-alert v-if="error || filterResult.error" type="error" class="mb-4" density="compact">{{ error || filterResult.error }}</v-alert>
 
-        <v-row v-if="!report" justify="center">
+        <v-row v-if="!sheet" justify="center">
             <v-col cols="12" md="8" lg="6">
                 <v-card class="text-center pa-12">
                     <v-icon size="64" class="mb-4 text-medium-emphasis">mdi-file-excel-outline</v-icon>
@@ -16,12 +16,23 @@
         <v-row v-else>
             <v-col cols="12" md="5" lg="4">
                 <v-card>
-                    <v-card-item :title="report.listType" :subtitle="file?.toString()">
+                    <v-card-item :title="sheet.listType" :subtitle="file?.toString()">
                         <template v-slot:prepend><v-icon size="large" color="primary">mdi-file-excel-outline</v-icon></template>
                         <template v-slot:append>
                             <v-btn variant="text" :loading="reading" prepend-icon="mdi-magnify" @click="openFile()">Change</v-btn>
                         </template>
                     </v-card-item>
+                    <v-card-text>
+                        <v-select
+                            v-model="layout"
+                            :items="layouts"
+                            label="Layout"
+                            prepend-inner-icon="mdi-format-list-bulleted"
+                            :hint="layoutHint"
+                            persistent-hint
+                            :error-messages="layoutError"
+                        />
+                    </v-card-text>
                 </v-card>
 
                 <v-card class="mt-4">
@@ -56,13 +67,17 @@
                     prepend-icon="mdi-export"
                     @click="exportFile()"
                 >
-                    Export {{ filteredSales.length }} of {{ report.sales.length }} sales
+                    Export {{ filteredSales.length }} of {{ report?.sales.length ?? 0 }} sales
                 </v-btn>
                 <v-alert v-if="savedFile" type="success" class="mt-4" density="compact">Downloaded: {{ savedFile }}</v-alert>
             </v-col>
 
             <v-col cols="12" md="7" lg="8">
-                <v-card>
+                <v-card v-if="!report" class="text-center text-medium-emphasis pa-12">
+                    <v-icon size="64" class="mb-4">mdi-format-list-bulleted</v-icon>
+                    <div>Choose a layout to preview the sales</div>
+                </v-card>
+                <v-card v-else>
                     <v-tabs v-model="previewTab">
                         <v-tab :value="0">Summary <v-chip class="ml-2" size="x-small">{{ subtotals.length }}</v-chip></v-tab>
                         <v-tab :value="1">
@@ -89,8 +104,11 @@
     import File from "@/Domain/File";
     import Sale from "@/Domain/Sale";
     import SalesReport from "@/Domain/SalesReport";
+    import SalesSheet from "@/Domain/SalesSheet";
+    import parseTransactionDate from "@/Domain/TransactionDate";
     import DateRange from "@/Domain/DateRange";
-    import ReadSalesFile from "@/Application/ReadSalesFile";
+    import BuildSalesReport from "@/Application/BuildSalesReport";
+    import { DetectLayout, LayoutNames } from "@/Application/SaleFinder";
     import FilterSalesByDateRange from "@/Application/FilterSalesByDateRange";
     import GetSalesSubtotal from "@/Application/GetSalesSubtotal";
     import ExportSalesReport from "@/Application/ExportSalesReport";
@@ -107,7 +125,10 @@
         name: "Importer",
         data: () => ({
             file: undefined as File | undefined,
-            report: undefined as SalesReport | undefined,
+            sheet: undefined as SalesSheet | undefined,
+            layouts: LayoutNames(),
+            layout: undefined as string | undefined,
+            detectedLayout: undefined as string | undefined,
             /** v-date-picker fills a range with every day between the picked ones */
             range: [] as Date[],
             pickerMonth: undefined as number | undefined,
@@ -136,6 +157,26 @@
             },
         }),
         computed: {
+            reportResult(): { report?: SalesReport; error: string } {
+                if (this.sheet == undefined || this.layout == undefined) return { error: "" };
+                try {
+                    return { report: BuildSalesReport(this.sheet, this.layout), error: "" };
+                } catch (e) {
+                    return { error: String(e) };
+                }
+            },
+            report(): SalesReport | undefined {
+                return this.reportResult.report;
+            },
+            layoutHint(): string {
+                if (this.layout == undefined) return "";
+                return this.layout == this.detectedLayout ? "Detected from the file" : "Chosen manually";
+            },
+            layoutError(): string {
+                if (this.reportResult.error) return this.reportResult.error;
+                if (this.layout == undefined) return "The layout could not be detected, choose one";
+                return "";
+            },
             rangeEnds(): Date[] {
                 if (this.range.length == 0) return [];
                 const times = this.range.map((date) => date.getTime());
@@ -171,6 +212,9 @@
             dateRange() {
                 this.savedFile = "";
             },
+            layout() {
+                this.savedFile = "";
+            },
         },
         methods: {
             async openFile() {
@@ -180,9 +224,11 @@
                 this.reading = true;
                 this.reset();
                 try {
-                    this.report = await ReadSalesFile(repository, file);
+                    this.sheet = await repository.read(file);
                     this.file = file;
-                    this.showFirstSaleMonth(this.report);
+                    this.detectedLayout = DetectLayout(this.sheet.listType);
+                    this.layout = this.detectedLayout;
+                    this.showFirstSaleMonth(this.sheet);
                 } catch (e) {
                     this.error = String(e);
                 } finally {
@@ -207,15 +253,17 @@
             },
             reset() {
                 this.file = undefined;
-                this.report = undefined;
+                this.sheet = undefined;
+                this.layout = undefined;
+                this.detectedLayout = undefined;
                 this.range = [];
                 this.savedFile = "";
                 this.error = "";
             },
-            showFirstSaleMonth(report: SalesReport) {
-                if (report.sales.length == 0) return;
+            showFirstSaleMonth(sheet: SalesSheet) {
+                if (sheet.records.length == 0) return;
                 try {
-                    const date = report.sales[0].transactionDate();
+                    const date = parseTransactionDate(sheet.records[0].date);
                     this.pickerMonth = date.getMonth();
                     this.pickerYear = date.getFullYear();
                 } catch (e) {

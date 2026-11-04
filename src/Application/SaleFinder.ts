@@ -1,30 +1,38 @@
 import ListNotFound from "@/Domain/ListNotFound";
-import Config from "@/Domain/Config";
+import ProductNotFound from "@/Domain/ProductNotFound";
 import StaticConfigRepository from "../Infrastructure/StaticConfigRepository";
 
-export default function FindSaleName(listType: string, machineId: string, line: string): string {
-    const machines = getList(listType);
+export function LayoutNames(): string[] {
+    return new StaticConfigRepository().get().map((layout) => layout.name);
+}
+
+/** Picks the layout from the sheet's list type. Undefined when no rule matches */
+export function DetectLayout(listType: string): string | undefined {
+    const text = listType.toUpperCase();
+    if (text.includes("FAST") || text.includes("2K")) return "ITW FAST";
+    if (text.includes("ESPA")) return "ESPARRAGUERA";
+    if (text.includes("ZARA")) return "ZARAGOZA";
+    if (text.includes("ALEM") || text.includes("1K")) return "ALEMANYA";
+    if (text.includes("COMP")) return "ITW COMP";
+    if (text.includes("GAR") || text.includes("LG")) return "LA GARRIGA";
+    return undefined;
+}
+
+export default function FindSaleName(layout: string, machineId: string, line: string): string {
+    const machines = getLayout(layout);
 
     let machine = machines[0];
     if (machines.length > 1) {
         machine = machines.find((machine) => machine.id == machineId)!;
     }
 
-    return machine.items.find((item) => item.line == line)!.name;
+    const item = machine?.items.find((item) => item.line == line);
+    if (item == undefined) throw new ProductNotFound(layout, machineId, line);
+    return item.name;
 }
 
-function getList(type: string): Config[] {
-    const repo = new StaticConfigRepository();
-    const files = repo.get();
-    const text = type.toUpperCase();
-    if (text.includes("FAST") || text.includes("2K"))
-        return files.find((file) => file.name == "ITW FAST")!.data;
-    if (text.includes("ESPA")) return files.find((file) => file.name == "ESPARRAGUERA")!.data;
-    if (text.includes("ZARA")) return files.find((file) => file.name == "ZARAGOZA")!.data;
-    if (text.includes("ALEM") || text.includes("1K"))
-        return files.find((file) => file.name == "ALEMANYA")!.data;
-    if (text.includes("COMP")) return files.find((file) => file.name == "ITW COMP")!.data;
-    if (text.includes("GAR") || text.includes("LG"))
-        return files.find((file) => file.name == "LA GARRIGA")!.data;
-    else throw new ListNotFound(type);
+function getLayout(name: string) {
+    const layout = new StaticConfigRepository().get().find((layout) => layout.name == name);
+    if (layout == undefined) throw new ListNotFound(name);
+    return layout.data;
 }
